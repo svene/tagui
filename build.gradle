@@ -1,4 +1,4 @@
-pply plugin: 'java'
+apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven'
 
@@ -10,7 +10,7 @@ repositories {
      mavenCentral()
 }
 dependencies {
-	compile ''
+	compile 'com.miglayout:miglayout-javafx:4.2'
 	testCompile 'junit:junit:4.11'
 }
 
