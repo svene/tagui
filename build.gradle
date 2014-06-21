@@ -1,0 +1,19 @@
+pply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+
+group = 'org.svenehrke.tagui'
+version = '1.0-SNAPSHOT'
+
+
+repositories {
+     mavenCentral()
+}
+dependencies {
+	compile ''
+	testCompile 'junit:junit:4.11'
+}
+
+sourceCompatibility = 1.8
+//targetCompatibility = 1.8
+
