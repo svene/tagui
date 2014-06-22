@@ -12,4 +12,8 @@ public class TagAndValue {
 		this.value = new SimpleStringProperty(value);
 	}
 
+	public boolean isDescription() {
+		return "description".equals(tag);
+	}
+
 }

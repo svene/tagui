@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.fxmisc.easybind.EasyBind;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +29,10 @@ public class MainApplication extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+
+		PMContext pmContext = new PMContext();
+		pmContext.initialize();
+
 		final MigPane pane = new MigPane(
 			"wrap 4, inset 10, debug" // Layout Constraints
 		);
@@ -35,7 +40,10 @@ public class MainApplication extends Application {
 		Scene scene = new Scene(pane, 500, 200, Color.DODGERBLUE);
 
 		ListView<String> listView = new ListView<>();
-		listView.getItems().addAll("Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7");
+
+		ObservableList<String> descriptions = EasyBind.map(pmContext.itemPMs, pm -> (String)(pm.getAt(PMContext.ATT_DESCRIPTION).getValue()));
+
+		listView.getItems().addAll(descriptions);
 
 		final TextField descriptionTextField = new TextField("Item1");
 

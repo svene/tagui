@@ -1,16 +1,22 @@
 package org.svenehrke.tagui;
 
-import javafx.application.Application;
+import org.opendolphinx.extension.InMemoryJavaFXDolphinStarter;
+
+import java.util.function.Consumer;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		TagUIJavaFXApplicationParameter.tagUIConfig = new TagUIConfig(
-			s -> System.out.println("addHandler: received: " + s)
+			readAddEntryHandler()
 		);
 
-		Application.launch(MainApplication.class, args);
+		new InMemoryJavaFXDolphinStarter().start(MainApplication.class);
+	}
+
+	private static Consumer<String> readAddEntryHandler() {
+		return s -> System.out.println("addHandler: received: " + s);
 	}
 
 
