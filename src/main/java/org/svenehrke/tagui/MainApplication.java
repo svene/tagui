@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.fxmisc.easybind.EasyBind;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import java.text.SimpleDateFormat;
@@ -42,9 +41,7 @@ public class MainApplication extends Application {
 
 		ListView<String> listView = new ListView<>();
 
-		ObservableList<String> descriptions = EasyBind.map(pmContext.itemPMs, pm -> (String)(pm.getAt(PMContext.ATT_DESCRIPTION).getValue()));
-
-		listView.getItems().addAll(descriptions);
+		listView.getItems().addAll(pmContext.descriptions);
 
 		final TextField descriptionTextField = new TextField("Item1");
 
