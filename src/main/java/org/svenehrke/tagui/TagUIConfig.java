@@ -1,6 +1,5 @@
 package org.svenehrke.tagui;
 
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,7 +9,6 @@ public class TagUIConfig {
 
 	Consumer<String> addEntryHandler;
 	ObservableList<Item> items = FXCollections.observableArrayList();
-	ObservableList<StringProperty> descriptions;
 
 	public TagUIConfig(Consumer<String> addEntryHandler) {
 		this.addEntryHandler = addEntryHandler;

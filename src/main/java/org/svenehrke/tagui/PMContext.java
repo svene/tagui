@@ -14,7 +14,7 @@ public class PMContext {
 
 	public static final String PM_TYPE_ITEM = "item";
 	public static final String ATT_DESCRIPTION = "description";
-	private ClientDolphin clientDolphin;
+	ClientDolphin clientDolphin;
 
 	ObservableList<PresentationModel> itemPMs = FXCollections.observableArrayList();
 	ObservableList<String> descriptions;

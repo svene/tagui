@@ -1,12 +1,18 @@
 package org.svenehrke.tagui;
 
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.opendolphin.core.PresentationModel;
+import org.opendolphin.core.client.ClientAttribute;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +23,7 @@ import static org.opendolphinx.extension.javafxclient.JavaFXApplicationParameter
 public class MainApplication extends Application {
 
 	private TagUIConfig tagUIConfig;
+	private PMContext pmContext;
 
 	@Override
 	public void init() throws Exception {
@@ -31,7 +38,7 @@ public class MainApplication extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		PMContext pmContext = new PMContext(clientDolphin).initialize();
+		pmContext = new PMContext(clientDolphin).initialize();
 
 		final MigPane pane = new MigPane(
 			"wrap 4, inset 10, debug" // Layout Constraints
@@ -39,9 +46,10 @@ public class MainApplication extends Application {
 
 		Scene scene = new Scene(pane, 500, 200, Color.DODGERBLUE);
 
-		ListView<String> listView = new ListView<>();
+		TableView<PresentationModel> itemTV = new TableView<>();
+		itemTV.getColumns().addAll(itemTableColumn());
 
-		listView.getItems().addAll(pmContext.descriptions);
+		itemTV.getItems().addAll(pmContext.itemPMs);
 
 		final TextField descriptionTextField = new TextField("Item1");
 
@@ -56,7 +64,7 @@ public class MainApplication extends Application {
 		tv.getColumns().addAll(tagColumn(), valueColumn());
 		tv.getItems().addAll(items());
 
-		pane.add(listView, "grow, spany 2");
+		pane.add(itemTV, "grow, spany 2");
 		pane.add(addButton, "grow");
 		pane.add(descriptionTextField, "grow, wrap");
 
@@ -66,6 +74,17 @@ public class MainApplication extends Application {
 		stage.setTitle("Tag UI");
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	private TableColumn<PresentationModel, String> itemTableColumn() {
+		TableColumn<PresentationModel, String> result = new TableColumn<>();
+
+		result.setCellValueFactory(param -> {
+			PresentationModel pm = param.getValue();
+			ClientAttribute clientAttribute = (ClientAttribute) pmContext.clientDolphin.getAt(pm.getId()).getAt(PMContext.ATT_DESCRIPTION);
+			return new MyClientAttributeWrapper(clientAttribute);
+		});
+		return result;
 	}
 
 	private ObservableList<TagAndValue> items() {
