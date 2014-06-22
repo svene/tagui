@@ -13,6 +13,8 @@ import org.tbee.javafx.scene.layout.MigPane;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.opendolphinx.extension.javafxclient.JavaFXApplicationParameters.clientDolphin;
+
 public class MainApplication extends Application {
 
 	private TagUIConfig tagUIConfig;
@@ -30,8 +32,7 @@ public class MainApplication extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		PMContext pmContext = new PMContext();
-		pmContext.initialize();
+		PMContext pmContext = new PMContext(clientDolphin).initialize();
 
 		final MigPane pane = new MigPane(
 			"wrap 4, inset 10, debug" // Layout Constraints
@@ -60,7 +61,7 @@ public class MainApplication extends Application {
 
 		pane.add(listView, "grow, spany 2");
 		pane.add(addButton, "grow");
-		pane.add(descriptionTextField, "wrap");
+		pane.add(descriptionTextField, "grow, wrap");
 
 		pane.add(deleteButton, "skip 1, aligny top, grow");
 		pane.add(tv, "wrap");
