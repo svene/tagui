@@ -38,6 +38,10 @@ public class PMContext {
 		return this;
 	}
 
+	public ClientAttribute getAttribute(String pmId, String propertyName) {
+		return (ClientAttribute) clientDolphin.getAt(pmId).getAt(propertyName);
+	}
+
 	private ClientPresentationModel newItemPM(String pmId) {
 		ClientPresentationModel pm1 = new ClientPresentationModel(pmId, Arrays.asList(new ClientAttribute(ATT_DESCRIPTION)));
 		pm1.setPresentationModelType(PM_TYPE_ITEM);

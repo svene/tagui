@@ -1,18 +1,17 @@
 package org.svenehrke.tagui;
 
 import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.opendolphin.core.PresentationModel;
-import org.opendolphin.core.client.ClientAttribute;
+import org.opendolphin.core.client.ClientAttributeWrapper;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import java.text.SimpleDateFormat;
@@ -76,13 +75,12 @@ public class MainApplication extends Application {
 		stage.show();
 	}
 
-	private TableColumn<PresentationModel, String> itemTableColumn() {
-		TableColumn<PresentationModel, String> result = new TableColumn<>();
+	private TableColumn<PresentationModel, Object> itemTableColumn() {
+		TableColumn<PresentationModel, Object> result = new TableColumn<>("Description");
 
 		result.setCellValueFactory(param -> {
 			PresentationModel pm = param.getValue();
-			ClientAttribute clientAttribute = (ClientAttribute) pmContext.clientDolphin.getAt(pm.getId()).getAt(PMContext.ATT_DESCRIPTION);
-			return new MyClientAttributeWrapper(clientAttribute);
+			return new ClientAttributeWrapper(pmContext.getAttribute(pm.getId(), PMContext.ATT_DESCRIPTION));
 		});
 		return result;
 	}
